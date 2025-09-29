@@ -1,4 +1,6 @@
 # See:
+- [AI编程，我找到了性价比平替，前后端真实编程场景实测](https://www.youtube.com/watch?v=HSmPZT3d1KE)
+- 
 # 如何配置Claude CLI，使用第三方大模型
 - filename: C:\Users\username\.claude\settings.json
 - 文件内容如下：
