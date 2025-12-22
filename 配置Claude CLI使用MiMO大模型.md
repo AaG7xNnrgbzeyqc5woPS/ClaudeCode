@@ -1,5 +1,9 @@
 # 最近小米MiMo公测，大火
-   -2025-12-22
+- [MiMo API key申请](https://platform.xiaomimimo.com/#/console/api-keys)
+- [MiMo文档：配置 MiMo API KeyMiMo配置 MiMo API KeyMiMo配置 MiMo API KeyMiM配置 MiMo API KeyM配置 MiMo 
+- [网页版对话平台](https://aistudio.xiaomimimo.com/#/)
+- 2025-12-22
+   
 #  MiMo-V2-Flash × Claude Code 实测可用配置
 |  条目	  | 官方写法	| 实测结果	| 推荐写法|
 |---------|---------|---------|---------|
@@ -9,7 +13,7 @@
 |思考模式	| 默认开启	                              | 直接报错	      | 必须 Thinking off	          |
 |并发	    | 无说明	                                 | 2 即 429	    | 保持 QPS≤1 最稳	            |
 
-# ✅ 一步到位的  settings.json （放项目根目录）
+# ✅ 一步到位的  "~\.claude\settings.json"
 ```json
 {
   "env": {
