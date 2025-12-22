@@ -1,6 +1,6 @@
 # 最近小米MiMo公测，大火
 - [MiMo API key申请](https://platform.xiaomimimo.com/#/console/api-keys)
-- [MiMo文档：配置 MiMo API KeyMiMo配置 MiMo API KeyMiMo配置 MiMo API KeyMiM配置 MiMo API KeyM配置 MiMo 
+- [MiMo文档：Claude Code 配置](https://platform.xiaomimimo.com/#/docs/integration/claude-code) 
 - [网页版对话平台](https://aistudio.xiaomimimo.com/#/)
 - 2025-12-22
    
@@ -32,6 +32,16 @@
 ```bash
 curl -s -o /dev/null -w "%{http_code}" \
   -H "Authorization: Bearer ${OPENAI_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"mimo-v2-flash","messages":[{"role":"user","content":"hi"}]}' \
+  https://api.xiaomimimo.com/v1/chat/completions
+```
+输出  200  说明 key + 网络 + 路径全部 OK
+
+# 🔍 快速验证脚本（bash / PowerShell 通用）,已经验证过的
+```bash
+curl -s -o /dev/null -w "%{http_code}" \
+  -H "Authorization: Bearer ${MIMO_API_KEY}" \
   -H "Content-Type: application/json" \
   -d '{"model":"mimo-v2-flash","messages":[{"role":"user","content":"hi"}]}' \
   https://api.xiaomimimo.com/v1/chat/completions
