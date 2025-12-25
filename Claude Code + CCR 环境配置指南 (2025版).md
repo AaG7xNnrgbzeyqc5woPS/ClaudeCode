@@ -30,8 +30,8 @@ npm install -g @musistudio/claude-code-router
 1. 配置文件路径
 CCR 的配置文件通常位于其全局安装目录下。你可以通过以下方法找到它：
 - 快速查找命令: ccr config (这通常会自动打开默认编辑器)
-- 物理路径参考: C:\Users\你的用户名\AppData\Roaming\npm\node_modules\@musistudio\claude-code-router\config.json
-- 简单办法: 在终端输入 ccr help，通常会显示配置文件的具体加载路径。
+- 物理路径参考: C:\Users\John\.claude-code-router\config.json
+- 简单办法: 在终端输入 ccr help，ccr status,ccr ui 通常会显示配置文件的具体加载路径。
 2. 推荐配置内容 (直连优化版)
 ```JSON
 {
