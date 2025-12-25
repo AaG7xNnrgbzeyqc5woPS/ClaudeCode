@@ -6,7 +6,7 @@
 1. **Node.js**: 确保已安装 Node.js 环境。
 2. **安装 Claude Code**:
 ```powershell
-   npm install -g @anthropic-ai/claude-code
+npm install -g @anthropic-ai/claude-code
 ```
 
 3. 安装 CCR (Claude Code Router):
@@ -22,8 +22,8 @@ npm install -g http-proxy-to-socks
 ```
 2. 启动桥接服务 (保持此窗口开启):
 ```PowerShell
-   # 将本地 SOCKS5 代理转为 8080 端口的 HTTP 代理
-   hpts -s 192.168.2.20:1080 -p 8080
+# 将本地 SOCKS5 代理转为 8080 端口的 HTTP 代理
+hpts -s 192.168.2.20:1080 -p 8080
 ```
 
 ## 三、 配置 CCR (config.json)
@@ -55,6 +55,8 @@ npm install -g http-proxy-to-socks
   }
 }
 ```
+注释：这里没有使用 google Gemini模型。所以代理  "PROXY_URL" 这一行可以删掉。   
+     同时hpts服务也可以不用，这个放到进阶教程，下一步再研究。先用好 mimo和deepseek服务吧。国产服务也很多，用不过来。
 
 ## 四、 启动服务
 1. 启动 CCR 路由:
