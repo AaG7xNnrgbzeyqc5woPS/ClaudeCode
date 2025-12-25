@@ -14,24 +14,34 @@ npm install -g @anthropic-ai/claude-code
 npm install -g @musistudio/claude-code-router
 ```
 
-## 二、 解决网络与协议问题 (SOCKS5 转 HTTP)
-由于 Claude Code 底层引擎不支持 socks5:// 协议，若使用本地代理（如 192.168.x.x:1080），需进行桥接
-1. 安装桥接工具:
+## 二、 设置环境变量 (API Keys)
+
 ```PowerShell
-npm install -g http-proxy-to-socks
-```
-2. 启动桥接服务 (保持此窗口开启):
-```PowerShell
-# 将本地 SOCKS5 代理转为 8080 端口的 HTTP 代理
-hpts -s 192.168.2.20:1080 -p 8080
+# 设置当前用户永久环境变量
+[Environment]::SetEnvironmentVariable("CCR_DEEPSEEK_API_KEY", "你的DeepSeek_Key", "User")
+[Environment]::SetEnvironmentVariable("CCR_MIMO_API_KEY", "你的Mimo_Key", "User")
+[Environment]::SetEnvironmentVariable("CCR_GEMINI_API_KEY", "你的Gemini_Key", "User")
+[Environment]::SetEnvironmentVariable("CCR_LOCAL_API_KEY", "自定义本地通信Key", "User")
+
+# 注意：设置完成后，需要重新启动 PowerShell 窗口才能生效
 ```
 
 ## 三、 配置 CCR (config.json)
+1. 配置文件路径
+CCR 的配置文件通常位于其全局安装目录下。你可以通过以下方法找到它：
+- 快速查找命令: ccr config (这通常会自动打开默认编辑器)
+- 物理路径参考: C:\Users\你的用户名\AppData\Roaming\npm\node_modules\@musistudio\claude-code-router\config.json
+- 简单办法: 在终端输入 ccr help，通常会显示配置文件的具体加载路径。
+2. 推荐配置内容 (直连优化版)
 ```JSON
 {
   "LOG": true,
+  "LOG_LEVEL": "info",
+  "HOST": "127.0.0.1",
   "PORT": 3456,
-  "PROXY_URL": "[http://127.0.0.1:8080](http://127.0.0.1:8080)", // 指向 hpts 桥接地址，若直连 Mimo 则设为 null
+  "APIKEY": "${CCR_LOCAL_API_KEY}",
+  "API_TIMEOUT_MS": 600000,
+  "PROXY_URL": null, // 已经改为直连 Mimo，无需本地代理
   "Providers": [
     {
       "name": "mimo",
@@ -50,6 +60,7 @@ hpts -s 192.168.2.20:1080 -p 8080
   ],
   "Router": {
     "default": "mimo,mimo-v2-flash",
+    "background": "mimo,mimo-v2-flash",
     "think": "deepseek,deepseek-reasoner",
     "longContext": "deepseek,deepseek-chat"
   }
@@ -65,30 +76,20 @@ hpts -s 192.168.2.20:1080 -p 8080
 ccr restart
 ```
 
-2. 启动 Claude Code: 首次运行需指定本地 API Base：
+2. 启动 Claude Code:
 ```PowerShell
-claude --api-base "[http://127.0.0.1:3456](http://127.0.0.1:3456)"
+claude
 ```
 
 3. 简洁用法，直接使用下面的指令启动ccr 和 claude code：
 ```PowerShell
 ccr code
 ```
+
+4. 快捷模型切换: 在 CLAUDE.md 中记录以下约定，方便 AI 协助切换：
+-  输入 /mimo: 切换到快速响应模型 (/model mimo,mimo-v2-flash)
+-  输入 /ds: 切换到深度逻辑模型 (/model deepseek,deepseek-reasoner)
    
-## 五、 项目级优化 (CLAUDE.md)
-在 Delphi 项目根目录下创建或修改 CLAUDE.md，添加快捷指令说明，帮助 AI 识别切换意图：
-```Markdown
-## 开发规范
-- 时区: 东八区 (UTC+8)
-- 语言: 中文
-
-## 模型快捷指令
-- /mimo: 切换至 Mimo V2 Flash (快速执行/读写文件)
-- /ds: 切换至 DeepSeek Reasoner (深度逻辑推理/架构分析)
-
-```
-注释：模型指令没有实验成功，这一段可以略过！
-
 ## 六、 常用维护指令
 - 查看当前路由状态: 在 Claude 窗口输入 /status。
 - 强制切换模型:
