@@ -55,8 +55,9 @@ hpts -s 192.168.2.20:1080 -p 8080
   }
 }
 ```
-注释：这里没有使用 google Gemini模型。所以代理  "PROXY_URL" 这一行可以删掉。   
-     同时hpts服务也可以不用，这个放到进阶教程，下一步再研究。先用好 mimo和deepseek服务吧。国产服务也很多，用不过来。
+注释：这里没有使用 google Gemini模型，代理  "PROXY_URL" 这一行可以删掉。    
+     同时hpts服务也不需要，这部分内容放到进阶教程，下一步再研究。  
+     先用好 mimo和deepseek服务吧，国产服务也很多，用不过来。  
 
 ## 四、 启动服务
 1. 启动 CCR 路由:
@@ -69,6 +70,11 @@ ccr restart
 claude --api-base "[http://127.0.0.1:3456](http://127.0.0.1:3456)"
 ```
 
+3. 简洁用法，直接使用下面的指令启动ccr 和 claude code：
+```PowerShell
+ccr code
+```
+   
 ## 五、 项目级优化 (CLAUDE.md)
 在 Delphi 项目根目录下创建或修改 CLAUDE.md，添加快捷指令说明，帮助 AI 识别切换意图：
 ```Markdown
@@ -81,15 +87,18 @@ claude --api-base "[http://127.0.0.1:3456](http://127.0.0.1:3456)"
 - /ds: 切换至 DeepSeek Reasoner (深度逻辑推理/架构分析)
 
 ```
+注释：模型指令没有实验成功，这一段可以略过！
 
 ## 六、 常用维护指令
 - 查看当前路由状态: 在 Claude 窗口输入 /status。
 - 强制切换模型:
+```
     !/model mimo,mimo-v2-flash
     !/model deepseek,deepseek-reasoner
+```
 - 查看 API 消耗: ccr usage
 
 ## 七、 避坑指南
-1. 400 错误 (Not supported model): 说明 Provider 不支持该字符串 ID，需通过 ccr model 或查询供应商文档确认准确 ID。
-2. 指令卡死: 通常是 DNS 污染或代理失效，尝试在 hpts 启动时增加 --proxy-dns 或检查 192.168 段代理是否通畅。
-3.DeepSeek Reasoner 报错: 该模型在进行“工具调用”（如读写文件）时可能因协议冲突崩溃，建议仅在纯对话逻辑推理时使用。
+1. 400 错误 (Not supported model): 说明 Provider 不支持该字符串 ID，需通过 ccr model 或查询供应商文档确认准确 ID。  
+2. 指令卡死: 通常是 DNS 污染或代理失效，尝试在 hpts 启动时增加 --proxy-dns 或检查 192.168 段代理是否通畅。  
+3.DeepSeek Reasoner 报错: 该模型在进行“工具调用”（如读写文件）时可能因协议冲突崩溃，建议仅在纯对话逻辑推理时使用。  
